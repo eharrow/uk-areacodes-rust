@@ -1,7 +1,5 @@
-
-mod data_source;
-use crate::data_source::api::uk::UK_JSON;
 mod lib;
+use crate::lib::api::uk::UK_JSON;
 
 fn main() {
     let data: Vec<lib::api::Place> =
