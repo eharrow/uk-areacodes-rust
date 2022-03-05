@@ -58,7 +58,7 @@ pub mod api {
 
         #[test]
         fn find_by_code_test() {
-            let data: Vec<Place> = serde_json::from_str(&crate::data_source::UK_JSON)
+            let data: Vec<Place> = serde_json::from_str(&crate::data_source::json::UK)
                 .expect("JSON was not well-formatted");
 
             if let Some(p) = find_by_code("01727", &data) {
@@ -68,7 +68,7 @@ pub mod api {
 
         #[test]
         fn starts_with_code_test() {
-            let data: Vec<Place> = serde_json::from_str(&crate::data_source::UK_JSON)
+            let data: Vec<Place> = serde_json::from_str(&crate::data_source::json::UK)
                 .expect("JSON was not well-formatted");
             if let Some(p) = starts_with_code("01328", &data) {
                 assert_eq!(p.area, "Fakenham");
@@ -77,7 +77,7 @@ pub mod api {
 
         #[test]
         fn binary_search_test() {
-            let data: Vec<Place> = serde_json::from_str(&crate::data_source::UK_JSON)
+            let data: Vec<Place> = serde_json::from_str(&crate::data_source::json::UK)
                 .expect("JSON was not well-formatted");
 
             if let Some(n) = binary_search(&data, 0, data.len() - 1, "01503") {

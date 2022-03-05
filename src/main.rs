@@ -1,8 +1,8 @@
 use uk_areacodes::api::*;
-use uk_areacodes::data_source::UK_JSON;
+use uk_areacodes::data_source::json::UK;
 
 fn main() {
-    let data: Vec<Place> = serde_json::from_str(&UK_JSON).expect("JSON was not well-formatted");
+    let data: Vec<Place> = serde_json::from_str(&UK).expect("JSON was not well-formatted");
 
     if let Some(p) = find_by_code("01727", &data) {
         println!("area is {:#?}", p.area);

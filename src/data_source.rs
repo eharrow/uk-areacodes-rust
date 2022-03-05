@@ -1,4 +1,5 @@
-pub const UK_JSON: &str = r#"[
+pub mod json {
+    pub const UK: &str = r#"[
         {
             "code": "0113",
             "area": "Leeds",
@@ -3666,3 +3667,4 @@ pub const UK_JSON: &str = r#"[
             "previousBTAreaName": "Cardiff"
         }
     ]"#;
+}
