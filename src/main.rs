@@ -1,4 +1,5 @@
-use uk_areacodes::api::*;
+use uk_areacodes::api::Place;
+use uk_areacodes::api::{binary_search, find_by_code, starts_with_code};
 use uk_areacodes::data_source::json::UK;
 
 fn main() {
