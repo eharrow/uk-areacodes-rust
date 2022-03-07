@@ -12,8 +12,6 @@ fn main() {
     if args.len() != 1 {
         print_usage();
         eprintln!("wrong number of arguments: expected 1, got {}.", args.len());
-        // eprintln!("{} wrong number of arguments: expected 4, got {}.",
-        //     "Error:".red().bold(), args.len());
         std::process::exit(1);
     }
     let num = &args[0];
