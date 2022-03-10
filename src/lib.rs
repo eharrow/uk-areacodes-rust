@@ -10,7 +10,10 @@ pub mod api {
         ofcom_desc: String,
         previous_b_t_area_name: String,
     }
-    pub fn find_by_code<'a>(prefix: &str, values: &'a Vec<Place>) -> Option<&'a Place> {
+    pub fn init() -> Vec<Place> {
+        serde_json::from_str(crate::data_source::json::UK).expect("JSON was not well-formatted")
+    }
+    pub fn find_by_code<'a>(prefix: &str, values: &'a [Place]) -> Option<&'a Place> {
         for item in values.iter() {
             // println!("area: {} code: {}", item.area, item.code);
             if item.code == prefix {
@@ -20,7 +23,7 @@ pub mod api {
         }
         None
     }
-    pub fn starts_with_code<'a>(number: &str, values: &'a Vec<Place>) -> Option<&'a Place> {
+    pub fn starts_with_code<'a>(number: &str, values: &'a [Place]) -> Option<&'a Place> {
         for item in values.iter() {
             if number.starts_with(&item.code) {
                 // println!("match {}: {}", number, item.area);
@@ -29,7 +32,7 @@ pub mod api {
         }
         None
     }
-    pub fn binary_search(arr: &Vec<Place>, left: usize, right: usize, x: &str) -> Option<usize> {
+    pub fn binary_search(arr: &[Place], left: usize, right: usize, x: &str) -> Option<usize> {
         // dbg!(left, right, x);
         if left <= right && right >= 1 {
             let mid = left + (right - left) / 2;

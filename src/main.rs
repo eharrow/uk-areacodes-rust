@@ -1,7 +1,5 @@
 use std::env;
-use uk_areacodes::api::Place;
-use uk_areacodes::api::{binary_search, find_by_code, starts_with_code};
-use uk_areacodes::data_source::json::UK;
+use uk_areacodes::api;
 
 fn print_usage() {
     eprintln!("Usage: uk-areacodes <code>");
@@ -16,7 +14,7 @@ fn main() {
     }
     let num = &args[0];
 
-    let data: Vec<Place> = serde_json::from_str(&UK).expect("JSON was not well-formatted");
+    let data: Vec<api::Place> = api::init();
 
     // if let Some(p) = find_by_code("01727", &data) {
     //     println!("area is {:#?}", p.area);
@@ -26,7 +24,7 @@ fn main() {
     //     println!("{:#?}", p)
     // }
 
-    if let Some(n) = binary_search(&data, 0, data.len() - 1, num) {
+    if let Some(n) = api::binary_search(&data, 0, data.len() - 1, num) {
         println!("{}", data[n as usize].area)
     }
 }
