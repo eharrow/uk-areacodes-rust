@@ -1,18 +1,23 @@
 pub mod data_source;
+/// My module
 pub mod api {
     use serde::Deserialize;
 
-    #[derive(Debug, Deserialize)]
+    /// An OFCOM place
+    #[derive(Debug, Deserialize, Clone)]
     #[serde(rename_all = "camelCase")]
     pub struct Place {
         code: String,
+        /// The place's area
         pub area: String,
         ofcom_desc: String,
         previous_b_t_area_name: String,
     }
+
     pub fn init() -> Vec<Place> {
         serde_json::from_str(crate::data_source::json::UK).expect("JSON was not well-formatted")
     }
+
     pub fn find_by_code<'a>(prefix: &str, values: &'a [Place]) -> Option<&'a Place> {
         for item in values.iter() {
             // println!("area: {} code: {}", item.area, item.code);
@@ -23,6 +28,7 @@ pub mod api {
         }
         None
     }
+
     pub fn starts_with_code<'a>(number: &str, values: &'a [Place]) -> Option<&'a Place> {
         for item in values.iter() {
             if number.starts_with(&item.code) {
@@ -32,6 +38,7 @@ pub mod api {
         }
         None
     }
+
     pub fn binary_search(arr: &[Place], left: usize, right: usize, x: &str) -> Option<usize> {
         // dbg!(left, right, x);
         if left <= right && right >= 1 {
