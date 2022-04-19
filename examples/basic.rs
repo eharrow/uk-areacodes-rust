@@ -16,6 +16,6 @@ fn main() {
     }
 
     if let Some(n) = binary_search(&data, 0, data.len() - 1, "01503") {
-        println!("Found {}", data[n as usize].area)
+        println!("Found place named {}", data[n as usize].area)
     }
 }
