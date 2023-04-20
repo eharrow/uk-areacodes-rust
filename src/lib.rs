@@ -1,4 +1,5 @@
 pub mod data_source;
+
 /// uk-areacodes api module for looking up a UK OFCOM area name from a phone number (land line).
 /// You might use this give you an idea of where a caller is being made from assumming the number is not being spoofed.
 pub mod api {
@@ -25,14 +26,8 @@ pub mod api {
 
     /// Finds a place by code prefix or STD as it is known in the UK
     pub fn find_by_code<'a>(prefix: &str, values: &'a [Place]) -> Option<&'a Place> {
-        for item in values.iter() {
-            // println!("area: {} code: {}", item.area, item.code);
-            if item.code == prefix {
-                // println!("match {}: {}", prefix, item.area);
-                return Some(item);
-            }
-        }
-        None
+        values.iter()
+            .find(|&item| item.code == prefix)
     }
 
     /// Finds a place by code prefix or STD as it is known in the UK
