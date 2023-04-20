@@ -32,13 +32,8 @@ pub mod api {
 
     /// Finds a place by code prefix or STD as it is known in the UK
     pub fn starts_with_code<'a>(number: &str, values: &'a [Place]) -> Option<&'a Place> {
-        for item in values.iter() {
-            if number.starts_with(&item.code) {
-                // println!("match {}: {}", number, item.area);
-                return Some(item);
-            }
-        }
-        None
+        values.iter()
+            .find(|&item|number.starts_with(&item.code))
     }
 
     /// Finds a place by code prefix or STD as it is known in the UK.  A more efficient search method.
@@ -46,15 +41,12 @@ pub mod api {
         // dbg!(left, right, x);
         if left <= right && right >= 1 {
             let mid = left + (right - left) / 2;
-            // println!("mid:{} - arr[mid]:{:#?}", mid, arr[mid].code);
-            // If the element is present at the
-            // middle itself
             if arr[mid].code == number {
                 return Some(mid);
             }
             // If element is smaller than mid, then
             // it can only be present in left subarray
-            if arr[mid].code > number.to_string() {
+            if number.to_string() < arr[mid].code {
                 // dbg!("element is smaller than mid so must be in left");
                 return binary_search(arr, left, mid - 1, number);
             }
