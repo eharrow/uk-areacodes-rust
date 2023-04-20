@@ -14,7 +14,7 @@ fn main() {
     }
     let num = &args[0];
 
-    let data: Vec<api::Place> = api::init();
+    let data: Vec<api::Place> = api::load();
 
     // if let Some(p) = find_by_code("01727", &data) {
     //     println!("area is {:#?}", p.area);
