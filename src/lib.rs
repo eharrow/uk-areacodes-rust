@@ -26,14 +26,12 @@ pub mod api {
 
     /// Finds a place by code prefix or STD as it is known in the UK
     pub fn find_by_code<'a>(prefix: &str, values: &'a [Place]) -> Option<&'a Place> {
-        values.iter()
-            .find(|&item| item.code == prefix)
+        values.iter().find(|&item| item.code == prefix)
     }
 
     /// Finds a place by code prefix or STD as it is known in the UK
     pub fn starts_with_code<'a>(number: &str, values: &'a [Place]) -> Option<&'a Place> {
-        values.iter()
-            .find(|&item|number.starts_with(&item.code))
+        values.iter().find(|&item| number.starts_with(&item.code))
     }
 
     /// Finds a place by code prefix or STD as it is known in the UK.  A more efficient search method.

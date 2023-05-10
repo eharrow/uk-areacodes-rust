@@ -15,6 +15,5 @@ fn it_returns_matches() {
 
     if let Some(n) = api::binary_search(&data, 0, data.len() - 1, "01503") {
         assert_eq!("Looe", data[n as usize].area);
-
     }
 }
