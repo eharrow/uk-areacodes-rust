@@ -6,7 +6,7 @@ pub mod api {
     use serde::Deserialize;
 
     /// An OFCOM place
-    #[derive(Debug, Deserialize, Clone)]
+    #[derive(Debug, Deserialize)]
     #[serde(rename_all = "camelCase")]
     pub struct Place {
         /// OFCOM area code
@@ -46,7 +46,7 @@ pub mod api {
             }
             // If element is smaller than mid, then
             // it can only be present in left subarray
-            if number.to_string() < arr[mid].code {
+            if *number < *arr[mid].code {
                 // dbg!("element is smaller than mid so must be in left");
                 return binary_search(arr, left, mid - 1, number);
             }

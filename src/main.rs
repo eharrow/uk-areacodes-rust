@@ -25,6 +25,6 @@ fn main() {
     // }
 
     if let Some(n) = api::binary_search(&data, 0, data.len() - 1, num) {
-        println!("Place => {}", data[n as usize].area)
+        println!("Place => {}", data[n].area)
     }
 }
