@@ -1,2 +1,2 @@
-# uk-areacodes-rust
+# uk-areacodes-rust [![Rust](https://github.com/eharrow/uk-areacodes-rust/actions/workflows/rust.yml/badge.svg)](https://github.com/eharrow/uk-areacodes-rust/actions/workflows/rust.yml)
 A Rust port of [my Typescript UK areacodes lookup lib](https://github.com/eharrow/uk-areacodes).  The idea is that this will be used as the core of a [WASM build](https://github.com/eharrow/uk-areacodes-wasm) to be used from [a pipedreams JS pipeline](https://github.com/eharrow/pipedream-worflows).
