@@ -50,6 +50,7 @@ pub mod api {
             }
             // dbg!("element is larger than mid so must be in right");
             return binary_search(arr, mid + 1, right, number);
+
         }
         None
     }
