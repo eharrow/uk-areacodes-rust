@@ -1,6 +1,7 @@
 use std::env;
 use uk_areacodes::api;
 
+//noinspection SpellCheckingInspection
 fn print_usage() {
     eprintln!("Usage: uk-areacodes <code>");
 }
