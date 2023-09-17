@@ -1,10 +1,12 @@
 pub mod data_source;
 
+//noinspection SpellCheckingInspection
 /// uk-areacodes api module for looking up a UK OFCOM area name from a phone number (land line).
 /// You might use this give you an idea of where a caller is being made from assumming the number is not being spoofed.
 pub mod api {
     use serde::Deserialize;
 
+    //noinspection SpellCheckingInspection
     /// An OFCOM place
     #[derive(Debug, Deserialize)]
     #[serde(rename_all = "camelCase")]
@@ -60,6 +62,7 @@ pub mod api {
         // Note this useful idiom: importing names from outer (for mod tests) scope.
         use super::*;
 
+        //noinspection SpellCheckingInspection
         #[test]
         fn find_by_code_test() {
             let data: Vec<Place> = serde_json::from_str(&crate::data_source::json::UK)
@@ -70,6 +73,7 @@ pub mod api {
             }
         }
 
+        //noinspection SpellCheckingInspection
         #[test]
         fn starts_with_code_test() {
             let data: Vec<Place> = serde_json::from_str(&crate::data_source::json::UK)
@@ -79,13 +83,14 @@ pub mod api {
             }
         }
 
+        //noinspection SpellCheckingInspection
         #[test]
         fn binary_search_test() {
             let data: Vec<Place> = serde_json::from_str(&crate::data_source::json::UK)
                 .expect("JSON was not well-formatted");
 
             if let Some(n) = binary_search(&data, 0, data.len() - 1, "01503") {
-                assert_eq!(data[n as usize].area, "Looe");
+                assert_eq!(data[n].area, "Looe");
             }
         }
     }
