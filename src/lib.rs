@@ -4,11 +4,12 @@ pub mod data_source;
 /// uk-areacodes api module for looking up a UK OFCOM area name from a phone number (land line).
 /// You might use this give you an idea of where a caller is being made from assumming the number is not being spoofed.
 pub mod api {
-    use serde::Deserialize;
+    use serde::{Deserialize, Serialize};
+    use std::collections::HashMap;
 
     //noinspection SpellCheckingInspection
     /// An OFCOM place
-    #[derive(Debug, Deserialize)]
+    #[derive(Debug, Deserialize, Serialize)]
     #[serde(rename_all = "camelCase")]
     pub struct Place {
         /// OFCOM area code
@@ -23,12 +24,18 @@ pub mod api {
 
     /// Initialises by loading the data and returning it as a list of Places
     pub fn load() -> Vec<Place> {
-        serde_json::from_str(crate::data_source::json::UK).expect("JSON was not well-formatted")
+        serde_json::from_str(crate::data_source::json::UK_AS_SEQ)
+            .expect("JSON was not well-formatted")
+    }
+
+    pub fn load_as_map() -> HashMap<String, Place> {
+        serde_json::from_str(crate::data_source::json::UK_AS_MAP)
+            .expect("JSON was not well-formatted")
     }
 
     /// Finds a place by code prefix or STD as it is known in the UK
-    pub fn find_by_code<'a>(prefix: &str, values: &'a [Place]) -> Option<&'a Place> {
-        values.iter().find(|&item| item.code == prefix)
+    pub fn find_by_code<'a>(prefix: &str, values: &'a HashMap<String, Place>) -> Option<&'a Place> {
+        values.get(prefix)
     }
 
     /// Finds a place by code prefix or STD as it is known in the UK
@@ -52,7 +59,6 @@ pub mod api {
             }
             // dbg!("element is larger than mid so must be in right");
             return binary_search(arr, mid + 1, right, number);
-
         }
         None
     }
@@ -62,11 +68,16 @@ pub mod api {
         // Note this useful idiom: importing names from outer (for mod tests) scope.
         use super::*;
 
+        #[test]
+        fn load_as_map_test() {
+            let as_map = load_as_map();
+            assert_eq!(as_map.len(), 611);
+        }
+
         //noinspection SpellCheckingInspection
         #[test]
         fn find_by_code_test() {
-            let data: Vec<Place> = serde_json::from_str(&crate::data_source::json::UK)
-                .expect("JSON was not well-formatted");
+            let data = load_as_map();
 
             if let Some(p) = find_by_code("01727", &data) {
                 assert_eq!(p.area, "St Albans");
@@ -76,7 +87,7 @@ pub mod api {
         //noinspection SpellCheckingInspection
         #[test]
         fn starts_with_code_test() {
-            let data: Vec<Place> = serde_json::from_str(&crate::data_source::json::UK)
+            let data: Vec<Place> = serde_json::from_str(&crate::data_source::json::UK_AS_SEQ)
                 .expect("JSON was not well-formatted");
             if let Some(p) = starts_with_code("01328", &data) {
                 assert_eq!(p.area, "Fakenham");
@@ -86,7 +97,7 @@ pub mod api {
         //noinspection SpellCheckingInspection
         #[test]
         fn binary_search_test() {
-            let data: Vec<Place> = serde_json::from_str(&crate::data_source::json::UK)
+            let data: Vec<Place> = serde_json::from_str(&crate::data_source::json::UK_AS_SEQ)
                 .expect("JSON was not well-formatted");
 
             if let Some(n) = binary_search(&data, 0, data.len() - 1, "01503") {
