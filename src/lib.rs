@@ -34,14 +34,7 @@ pub mod api {
     }
 
     /// Finds a place by code prefix or STD as it is known in the UK
-    pub fn find_by_code<'a>(prefix: &str, values: &'a [Place]) -> Option<&'a Place> {
-        values.iter().find(|&item| item.code == prefix)
-    }
-
-    pub fn find_by_code_with_map<'a>(
-        prefix: &str,
-        values: &'a HashMap<String, Place>,
-    ) -> Option<&'a Place> {
+    pub fn find_by_code<'a>(prefix: &str, values: &'a HashMap<String, Place>) -> Option<&'a Place> {
         values.get(prefix)
     }
 
@@ -84,19 +77,9 @@ pub mod api {
         //noinspection SpellCheckingInspection
         #[test]
         fn find_by_code_test() {
-            let data: Vec<Place> = serde_json::from_str(&crate::data_source::json::UK_AS_SEQ)
-                .expect("JSON was not well-formatted");
-
-            if let Some(p) = find_by_code("01727", &data) {
-                assert_eq!(p.area, "St Albans");
-            }
-        }
-
-        #[test]
-        fn find_by_code_by_map_test() {
             let data = load_as_map();
 
-            if let Some(p) = find_by_code_with_map("01727", &data) {
+            if let Some(p) = find_by_code("01727", &data) {
                 assert_eq!(p.area, "St Albans");
             }
         }
