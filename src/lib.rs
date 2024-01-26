@@ -23,27 +23,40 @@ pub mod api {
     }
 
     /// Initialises by loading the data and returning it as a list of Places
+    /// ## Panics
+    ///
+    /// Will panic if the JSON it loads is not well-formed
+    #[must_use]
     pub fn load() -> Vec<Place> {
         serde_json::from_str(crate::data_source::json::UK_AS_SEQ)
             .expect("JSON was not well-formatted")
     }
 
+    /// Initialises by loading the data and returning it as a hashmap of place names to Places
+    /// ## Panics
+    ///
+    /// Will panic if the JSON it loads is not well-formed
+    #[must_use]
     pub fn load_as_map() -> HashMap<String, Place> {
         serde_json::from_str(crate::data_source::json::UK_AS_MAP)
             .expect("JSON was not well-formatted")
     }
 
     /// Finds a place by code prefix or STD as it is known in the UK
+    #[allow(clippy::implicit_hasher)]
+    #[must_use]
     pub fn find_by_code<'a>(prefix: &str, values: &'a HashMap<String, Place>) -> Option<&'a Place> {
         values.get(prefix)
     }
 
     /// Finds a place by code prefix or STD as it is known in the UK
+    #[must_use]
     pub fn starts_with_code<'a>(number: &str, values: &'a [Place]) -> Option<&'a Place> {
         values.iter().find(|&item| number.starts_with(&item.code))
     }
 
     /// Finds a place by code prefix or STD as it is known in the UK.  A more efficient search method.
+    #[must_use]
     pub fn binary_search(arr: &[Place], left: usize, right: usize, number: &str) -> Option<usize> {
         // dbg!(left, right, x);
         if left <= right && right >= 1 {
@@ -87,7 +100,7 @@ pub mod api {
         //noinspection SpellCheckingInspection
         #[test]
         fn starts_with_code_test() {
-            let data: Vec<Place> = serde_json::from_str(&crate::data_source::json::UK_AS_SEQ)
+            let data: Vec<Place> = serde_json::from_str(crate::data_source::json::UK_AS_SEQ)
                 .expect("JSON was not well-formatted");
             if let Some(p) = starts_with_code("01328", &data) {
                 assert_eq!(p.area, "Fakenham");
@@ -97,7 +110,7 @@ pub mod api {
         //noinspection SpellCheckingInspection
         #[test]
         fn binary_search_test() {
-            let data: Vec<Place> = serde_json::from_str(&crate::data_source::json::UK_AS_SEQ)
+            let data: Vec<Place> = serde_json::from_str(crate::data_source::json::UK_AS_SEQ)
                 .expect("JSON was not well-formatted");
 
             if let Some(n) = binary_search(&data, 0, data.len() - 1, "01503") {
