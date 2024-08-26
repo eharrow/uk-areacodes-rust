@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 color-eyre = "0.6.3"
-const_panic = "0.2.8"
+const_panic = "0.2.9"
 rstest = "0.22.0"
 serde = { version = "1.0", features = ["derive"] }
 
