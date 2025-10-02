@@ -2,6 +2,7 @@ pub mod data_source;
 
 //noinspection SpellCheckingInspection
 /// uk-areacodes api module for looking up a UK OFCOM area name from a phone number (land line).
+///
 /// You might use this give you an idea of where a caller is being made from assumming the number is not being spoofed.
 pub mod api {
     use serde::{Deserialize, Serialize};
