@@ -24,5 +24,7 @@ fn it_returns_matches_with_map() {
 
     if let Some(p) = api::find_by_code("01727", &data) {
         assert_eq!("St Albans", p.area);
+        assert_eq!(p.lat.as_ref().expect("oh dear"), "51.753051");
+
     }
 }
