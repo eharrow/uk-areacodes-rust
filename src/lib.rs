@@ -2,6 +2,7 @@ pub mod data_source;
 
 //noinspection SpellCheckingInspection
 /// uk-areacodes api module for looking up a UK OFCOM area name from a phone number (land line).
+///
 /// You might use this give you an idea of where a caller is being made from assumming the number is not being spoofed.
 pub mod api {
     use serde::{Deserialize, Serialize};
@@ -20,6 +21,10 @@ pub mod api {
         ofcom_desc: String,
         /// OFCOM's previous name of the area
         previous_b_t_area_name: String,
+        /// Geocoded latitude
+        pub lat: Option<String>,
+        /// Geocoded longitude
+        pub lon: Option<String>
     }
 
     /// Initialises by loading the data and returning it as a list of Places
@@ -94,6 +99,7 @@ pub mod api {
 
             if let Some(p) = find_by_code("01727", &data) {
                 assert_eq!(p.area, "St Albans");
+                assert_eq!(p.lat.as_ref().expect("oh dear"), "51.753051");
             }
         }
 
